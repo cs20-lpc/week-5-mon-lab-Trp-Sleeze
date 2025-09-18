@@ -1,0 +1,12 @@
+# Ignore Visual Studio cache and build stuff
+.vs/
+x64/
+Debug/
+Release/
+
+# Ignore user-specific settings
+*.vcxproj.user
+*.suo
+*.user
+*.log
+

@@ -1,29 +1,24 @@
+#include <iostream>
 #include "DoublyList.hpp"
 
-using namespace std;
+int main() {
+    DoublyList<int> L;
+    L.append(10);
+    L.append(20);
+    L.insert(1, 15);     // 10,15,20
 
-int main()
-{
+    std::cout << L;      // prints list
+    std::cout << "len=" << L.getLength() << '\n';
 
-    DoublyList<int> dlist;
-    dlist.append(4);
-    dlist.append(30);
-    dlist.append(23);
+    std::cout << "pos0=" << L.getElement(0) << '\n';
+    std::cout << (L.search(20) ? "found 20\n" : "no 20\n");
 
-    cout << dlist.getLength() << " ";
+    L.replace(1, 99);    // 10,99,20
+    std::cout << L;
 
-    cout << dlist.getElement(1) << " ";
+    L.remove(0);         // 99,20
+    std::cout << "len=" << L.getLength() << '\n';
+    std::cout << L;
 
-    dlist.insert(1, 19);
-    cout << dlist.getElement(1) << " ";
-
-    dlist.remove(1);
-    dlist.getLength();
-
-    dlist.replace(2, 54);
-    cout << dlist.getElement(2) << " ";
-
-    bool found = dlist.search(54);
-    cout << found << " ";
-
+    return 0;
 }

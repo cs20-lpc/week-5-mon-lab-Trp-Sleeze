@@ -1,76 +1,49 @@
-#ifndef DOUBLY_LIST_HPP
-#define DOUBLY_LIST_HPP
+#ifndef DOUBLYLIST_HPP
+#define DOUBLYLIST_HPP
 
-#include "List.hpp"
-#include <iostream>
-using namespace std;
+#include <ostream>
+
+template <typename T> class DoublyList;
+template <typename T> std::ostream& operator<<(std::ostream&, const DoublyList<T>&);
 
 template <typename T>
-class DoublyList : public List<T> {
-    protected:
-        // represents an element in the doubly linked list
-        struct Node {
-            T value;
-            Node* next;
-            Node* prev;
+class DoublyList {
+private:
+    struct Node {
+        T value;
+        Node* prev;
+        Node* next;
+        Node() : value(), prev(nullptr), next(nullptr) {}
+        Node(const T& v) : value(v), prev(nullptr), next(nullptr) {}
+    };
 
-            Node(T v = T(), Node* n = nullptr, Node* p = nullptr)
-            : value(v), next(n), prev(p) { }
-        };
+    Node* header;
+    Node* trailer;
+    int   length;
 
-        // sentinel pointers
-        Node *header, *trailer;
+    void copy(const DoublyList<T>&);
 
-    private:
-        // copy the state of the argument list to `this`
-        void copy(const DoublyList<T>&);
+public:
+    DoublyList();
+    DoublyList(const DoublyList<T>&);
+    DoublyList<T>& operator=(const DoublyList<T>&);
+    ~DoublyList();
 
-    public:
-        // default constructor
-        DoublyList();
+    void append(const T& elem);
+    void clear();
 
-        // copy constructor
-        DoublyList(const DoublyList<T>&);
+    T    getElement(int position) const;
+    int  getLength() const;
 
-        // overloaded assignment operator
-        DoublyList<T>& operator=(const DoublyList<T>&);
+    void insert(int position, const T& elem);
+    bool isEmpty() const;
+    void remove(int position);
+    bool search(const T& elem) const;
+    void replace(int position, const T& elem);
 
-        // destructor
-        virtual ~DoublyList();
-
-        // add the argument to the end of the list
-        virtual void append(const T&) override;
-
-        // remove all elements in the list, resetting to the initial state
-        virtual void clear() override;
-
-        // return the element at the given position (argument)
-        virtual T getElement(int) const override;
-
-        // return the current length of the list
-        virtual int getLength() const override;
-
-        // insert the given element (argument 2) at
-        // the given position (argument 1)
-        virtual void insert(int, const T&) override;
-
-        // determine if the list currently empty
-        virtual bool isEmpty() const override;
-
-        // remove the element at the given position (argument)
-        virtual void remove(int) override;
-
-        // replace the element at the given position (argument 1) with
-        // the value given (argument 2)
-        virtual void replace(int, const T&) override;
-
-        // check if an element exists that contains the given value (argument)
-        virtual bool search(const T&) const;
-
-        // overloaded stream insertion operator to make printing easier
-        template <typename U>
-        friend ostream& operator<<(ostream&, const DoublyList<U>&);
+    friend std::ostream& operator<< <>(std::ostream&, const DoublyList<T>&);
 };
 
-#include "DoublyList.tpp"
-#endif
+#include "DoublyList.tpp"   // keep inside the guard
+
+#endif // DOUBLYLIST_HPP
